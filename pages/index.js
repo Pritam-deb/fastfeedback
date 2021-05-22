@@ -11,7 +11,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Fast Feedback
+          Fast Feedback with NextJS
         </h1>
 
         <p className={styles.description}>

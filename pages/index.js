@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import {auth} from 'firebase'
-import { useAuth } from '../lib/auth'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { auth } from "firebase";
+import { useAuth } from "../lib/auth";
+import styles from "../styles/Home.module.css";
 
 const Home = () => {
   const auth = useAuth();
@@ -13,18 +13,18 @@ const Home = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Fast Feedback with NextJS
-        </h1>
-
+        <h1 className={styles.title}>Fast Feedback with NextJS</h1>
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
-        <button onClick={(e)=>auth.signInWithGithub()}>Sign In</button>
-        <div>{auth?.user?.email}</div>
+        {!auth?.user && (
+          <button onClick={(e) => auth.signInWithGithub()}>SignIn</button>
+        )}
+
+        <div>{auth?.user?.name}</div>
         {auth?.user && (
-          <button onClick={(e)=>auth.signout()}>Sign Out</button>
+          <button onClick={(e) => auth.signout()}>Sign Out</button>
         )}
       </main>
 
@@ -34,12 +34,12 @@ const Home = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

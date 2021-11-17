@@ -13,44 +13,35 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-const DashboardShell = ({ children }) => (
-  <Flex flexDirection="column">
-    <Flex
-      backgroundColor="white"
-      alignItems="center"
-      justifyContent="space-between"
-      p={4}
-    >
-      <Stack spacing={4} isInline alignItems="center">
-        <Icon name="logo" color="black" />
-        <Link>Feedback</Link>
-        <Link>Sites</Link>
-      </Stack>
-      <Flex alignItems="center">
-        <Link mr={4}>Account</Link>
-        <Avatar size="sm" />
-      </Flex>
-    </Flex>
-    <Flex
-      flexDirection="row"
-      backgroundColor="gray.100"
-      justifyContent="flex-start"
-      alignItems="stretch"
-      p={8}
-    >
+import { useAuth } from "@/lib/auth";
+const DashboardShell = ({ children }) => {
+  const auth = useAuth();
+  return (
+    <Flex flexDirection="column">
       <Flex
-        justifyContent="center"
+        backgroundColor="white"
         alignItems="center"
-        flexDirection="row"
-        maxWidth="800px"
-        ml="auto"
-        mr="auto"
+        justifyContent="space-between"
+        p={4}
       >
-        <Flex
-          flexDirection="column"
-          alignItems="stretch"
-          justifyContent="flex-start"
-        >
+        <Stack spacing={4} isInline alignItems="center">
+          <Icon name="logo" color="black" />
+          <Link>Feedback</Link>
+          <Link>Sites</Link>
+        </Stack>
+        <Flex alignItems="center">
+          <Link mr={4}>Account</Link>
+          <Avatar size="sm" src={auth.user.photoUrl} />
+        </Flex>
+      </Flex>
+      <Flex
+        flexDirection="row"
+        backgroundColor="gray.100"
+        justifyContent="flex-start"
+        alignItems="stretch"
+        p={8}
+      >
+        <Flex w="100%" direction="column" maxWidth="800px" ml="auto" mr="auto">
           <Breadcrumb>
             <BreadcrumbItem>
               <BreadcrumbLink>Sites/</BreadcrumbLink>
@@ -61,7 +52,7 @@ const DashboardShell = ({ children }) => (
         </Flex>
       </Flex>
     </Flex>
-  </Flex>
-);
+  );
+};
 
 export default DashboardShell;

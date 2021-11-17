@@ -1,24 +1,31 @@
 import React from "react";
-import { Heading, Box, Text, Button } from "@chakra-ui/react";
+import { Heading, Flex, Text, Button } from "@chakra-ui/react";
 import DashboardShell from "./DashboardShell";
 const EmptyState = () => (
   <DashboardShell>
-    <Box
+    <Flex
       width="100%"
       backgroundColor="whiteAlpha.900"
       color="black.500"
-      opacity={0.97}
       borderRadius={8}
-      p={8}
+      p={16}
+      justify="center"
+      direction="column"
+      align="center"
     >
-      <Heading size="md" as="h2">
+      <Heading size="lg" as="h2" mb={2}>
         You haven't added any sites.
       </Heading>
-      <Text>Welcome. Let's get started.</Text>
-      <Button variant="solid" size="md" backgroundColor="black" color="white">
+      <Text mb={4}>Welcome. Let's get started.</Text>
+      <Button
+        backgroundColor="black"
+        color="white"
+        maxW="200px"
+        fontWeight="medium"
+      >
         Add Your First Site
       </Button>
-    </Box>
+    </Flex>
   </DashboardShell>
 );
 

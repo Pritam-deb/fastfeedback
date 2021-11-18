@@ -11,6 +11,7 @@ import {
   FormLabel,
   Input,
   useDisclosure,
+  Button,
 } from "@chakra-ui/react";
 
 function AddSiteModal() {
@@ -20,38 +21,45 @@ function AddSiteModal() {
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Button ml={4} ref={finalRef}>
-        I'll receive focus on close
+      <Button
+        backgroundColor="black"
+        color="white"
+        maxW="200px"
+        fontWeight="medium"
+        onClick={onOpen}
+      >
+        Add Your First Site
       </Button>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader fontWeight="heavy">Add Site</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input ref={initialRef} placeholder="First name" />
+              <FormLabel>Name</FormLabel>
+              <Input ref={initialRef} placeholder="Add Site" />
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder="Last name" />
+              <FormLabel>Link</FormLabel>
+              <Input placeholder="https://website.com" />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Save
+            <Button onClick={onClose} mr={3}>
+              Cancel
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button
+              backgroundColor="#99FFFE"
+              color="#194D4C"
+              fontWeight="medium"
+              mr={3}
+            >
+              Create
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

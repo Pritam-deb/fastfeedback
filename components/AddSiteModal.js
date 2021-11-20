@@ -25,7 +25,7 @@ function AddSiteModal() {
   const auth = useAuth();
   const initialRef = useRef();
   const { handleSubmit, register } = useForm();
-  const onCreateSite = (site, url) => {
+  const onCreateSite = ({ site, url }) => {
     createSite({
       authorId: auth.user.uid,
       createdAt: new Date().toISOString(),

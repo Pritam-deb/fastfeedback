@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useForm } from "react-hook-form";
 import {
   Modal,
   ModalOverlay,
@@ -14,10 +15,16 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+import { createSite } from "@/lib/db";
+
 function AddSiteModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = useRef();
+  const { handleSubmit, register } = useForm();
+  const onCreateSite = (values) => {
+    createSite(values);
+  };
 
   return (
     <>
@@ -33,18 +40,25 @@ function AddSiteModal() {
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
           <ModalHeader fontWeight="heavy">Add Site</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Name</FormLabel>
-              <Input ref={initialRef} placeholder="Add Site" />
+              <Input
+                ref={initialRef}
+                placeholder="Add Site"
+                {...register("site", { required: true, maxLength: 20 })}
+              />
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Link</FormLabel>
-              <Input placeholder="https://website.com" />
+              <Input
+                placeholder="https://website.com"
+                {...register("url", { required: true })}
+              />
             </FormControl>
           </ModalBody>
 
@@ -57,6 +71,7 @@ function AddSiteModal() {
               color="#194D4C"
               fontWeight="medium"
               mr={3}
+              type="submit"
             >
               Create
             </Button>

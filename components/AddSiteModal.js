@@ -49,6 +49,10 @@ function AddSiteModal() {
         color="white"
         maxW="200px"
         fontWeight="medium"
+        _hover={{ color: "black", bg: "white" }}
+        _active={{
+          transform: "scale(0.98)",
+        }}
         onClick={onOpen}
       >
         Add Your First Site

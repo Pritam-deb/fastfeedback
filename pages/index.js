@@ -22,15 +22,13 @@ const Home = () => {
       </Head>
       <Heading fontWeight={"heavy"}>Fast Feedback</Heading>
       <Icon color="black" name="logo" size="64px" />
-      <Text>
-        Current User: <Code>{auth?.user?.email}</Code>
-      </Text>
-      {/* {!auth?.user && (
-          <Button onClick={(e) => auth.signInWithGithub()}>SignIn</Button>
-                    <Button onClick={(e) => auth.signout()}>Sign Out</Button>
 
-        )} */}
-
+      {auth?.user ? (
+        <Button onClick={(e) => auth.signout()}>Sign Out</Button>
+      ) : (
+        <Button onClick={(e) => auth.signInWithGithub()}>SignIn</Button>
+      )}
+      {/* 
       <div>{auth?.user?.name}</div>
       {auth.user ? (
         <EmptyState />
@@ -43,7 +41,7 @@ const Home = () => {
         >
           SignIn
         </Button>
-      )}
+      )} */}
     </Flex>
   );
 };

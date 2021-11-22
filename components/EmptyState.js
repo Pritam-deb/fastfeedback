@@ -25,7 +25,7 @@ const EmptyState = () => (
       >
         Add Your First Site
       </Button> */}
-    <AddSiteModal />
+    <AddSiteModal>Add Your First Site</AddSiteModal>
   </Flex>
 );
 

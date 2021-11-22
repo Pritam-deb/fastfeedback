@@ -15,11 +15,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import { mutate } from "swr";
 
 import { createSite } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
 
-function AddSiteModal() {
+function AddSiteModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const auth = useAuth();
@@ -39,12 +40,13 @@ function AddSiteModal() {
       duration: 3000,
       isClosable: true,
     });
+    mutate("api/sites");
     onClose();
   };
 
   return (
     <>
-      <Button
+      {/* <Button
         backgroundColor="black"
         color="white"
         maxW="200px"
@@ -56,6 +58,17 @@ function AddSiteModal() {
         onClick={onOpen}
       >
         Add Your First Site
+      </Button> */}
+
+      <Button
+        backgroundColor="gray.900"
+        color="white"
+        fontWeight="medium"
+        _hover={{ bg: "gray.700" }}
+        _active={{ bg: "gray.800", transform: "scale(0.95)" }}
+        onClick={onOpen}
+      >
+        {children}
       </Button>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>

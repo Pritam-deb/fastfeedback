@@ -25,11 +25,11 @@ function AddSiteModal() {
   const auth = useAuth();
   const initialRef = useRef();
   const { handleSubmit, register } = useForm();
-  const onCreateSite = ({ site, url }) => {
+  const onCreateSite = ({ name, url }) => {
     createSite({
       authorId: auth.user.uid,
       createdAt: new Date().toISOString(),
-      site,
+      name,
       url,
     });
     toast({
@@ -69,7 +69,7 @@ function AddSiteModal() {
               <Input
                 ref={initialRef}
                 placeholder="Add Site"
-                {...register("site", { required: true, maxLength: 20 })}
+                {...register("name", { required: true, maxLength: 20 })}
               />
             </FormControl>
 

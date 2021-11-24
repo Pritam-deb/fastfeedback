@@ -15,10 +15,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
 
 import { createSite } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
+import fetcher from "@/utils/fetcher";
 
 function AddSiteModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,13 +27,16 @@ function AddSiteModal({ children }) {
   const auth = useAuth();
   const initialRef = useRef();
   const { handleSubmit, register } = useForm();
+  const { data } = useSWR("/api/sites", fetcher);
+
   const onCreateSite = ({ name, url }) => {
-    createSite({
+    const newSite = {
       authorId: auth.user.uid,
       createdAt: new Date().toISOString(),
       name,
       url,
-    });
+    };
+    createSite(newSite);
     toast({
       title: "Success!",
       description: "We've your site.",
@@ -40,7 +44,13 @@ function AddSiteModal({ children }) {
       duration: 3000,
       isClosable: true,
     });
-    mutate("api/sites");
+    mutate(
+      "/api/sites",
+      async (data) => {
+        return { sites: [...data.sites, newSite] };
+      },
+      false
+    );
     onClose();
   };
 

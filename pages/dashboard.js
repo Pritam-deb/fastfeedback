@@ -8,8 +8,9 @@ import fetcher from "@/utils/fetcher";
 import SiteTable from "@/components/SiteTable";
 
 const Dashboard = () => {
-  const { data } = useSWR("/api/sites", fetcher);
-  console.log(data?.sites);
+  const { user } = useAuth();
+  const { data } = useSWR(user ? ["/api/sites", user.token] : null, fetcher);
+
   const auth = useAuth();
   if (!data) {
     return (
@@ -21,7 +22,6 @@ const Dashboard = () => {
   return (
     <DashboardShell>
       {data.sites ? <SiteTable sites={data.sites} /> : <EmptyState />}
-      {/* <EmptyState /> */}
     </DashboardShell>
   );
 };

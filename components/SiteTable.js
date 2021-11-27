@@ -9,6 +9,8 @@ import { Link } from "@chakra-ui/layout";
 import { parseISO } from "date-fns";
 
 const SiteTable = ({ sites }) => {
+  // const userSite = [];
+  // userSite.push(sites);
   return (
     <Table>
       <thead>

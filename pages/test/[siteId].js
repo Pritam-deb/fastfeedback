@@ -1,5 +1,3 @@
-import { getAllFeedback, getAllSites } from "@/lib/db-admin";
-import Feedback from "@/components/Feedback";
 import { Box } from "@chakra-ui/layout";
 import {
   FormControl,
@@ -9,10 +7,17 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
+
+import { getAllFeedback, getAllSites } from "@/lib/db-admin";
+import Feedback from "@/components/Feedback";
+import { useAuth } from "@/lib/auth";
+import { createFeedback } from "@/lib/db";
 
 export async function getStaticProps(context) {
   const siteId = context.params.siteId;
-  const feedback = await getAllFeedback(siteId);
+  const { feedback } = await getAllFeedback(siteId);
 
   return {
     props: {
@@ -22,7 +27,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const sites = await getAllSites();
+  const { sites } = await getAllSites();
   const paths = sites.map((site) => ({
     params: { siteId: site.id.toString() },
   }));
@@ -33,9 +38,24 @@ export async function getStaticPaths() {
 }
 
 const SiteFeedback = ({ initialFeedback }) => {
+  const auth = useAuth();
+  const router = useRouter();
+  const inputEl = useRef(null);
+  const [allFeedback, setAllFeedback] = useState(initialFeedback);
+
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("HEllo");
+    const newFeedback = {
+      author: auth.user.name,
+      authorId: auth.user.uid,
+      siteId: router.query.siteId,
+      text: inputEl.current.value,
+      createdAt: new Date().toISOString(),
+      provider: auth.user.provider,
+      status: "pending",
+    };
+    setAllFeedback([newFeedback, ...allFeedback]);
+    createFeedback(newFeedback);
   };
   return (
     <Box
@@ -48,13 +68,14 @@ const SiteFeedback = ({ initialFeedback }) => {
       <Box as="form" onSubmit={onSubmit}>
         <FormControl my={8}>
           <FormLabel htmlFor="comment">Comment</FormLabel>
-          <Input type="comment" id="comment" />
+          <Input ref={inputEl} type="comment" id="comment" />
           <Button type="submit" fontWeight="medium" mt={4}>
             Add Comment
           </Button>
         </FormControl>
       </Box>
-      {initialFeedback.map((feedback) => (
+
+      {allFeedback.map((feedback) => (
         <Feedback key={feedback.id} {...feedback} />
       ))}
     </Box>

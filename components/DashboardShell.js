@@ -1,6 +1,7 @@
 import React, { Children } from "react";
 import { Flex, Link, Stack, Icon, Avatar, Button } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { SiFastapi } from "react-icons/si";
 
 import { useAuth } from "@/lib/auth";
 const DashboardShell = ({ children }) => {
@@ -16,7 +17,8 @@ const DashboardShell = ({ children }) => {
       >
         <Stack spacing={4} isInline align="center">
           <NextLink href="/" passHref>
-            <Icon name="logo" color="black" />
+            {/* <Icon name="logo" color="black" /> */}
+            <SiFastapi size="32px" color="black" />
           </NextLink>
           <NextLink href="/feedback" passHref>
             <Link>Feedback</Link>
@@ -31,7 +33,7 @@ const DashboardShell = ({ children }) => {
               variant="ghost"
               mr={2}
               transform="scale(0.98)"
-              onClick={() => signout()}
+              onClick={() => auth.signout()}
             >
               Log Out
             </Button>

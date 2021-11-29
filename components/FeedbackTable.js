@@ -10,10 +10,12 @@ import { Code, IconButton } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Switch } from "@chakra-ui/switch";
 import { parseISO } from "date-fns";
+import RemoveButton from "./RemoveButton";
 
 const FeedbackTable = ({ allFeedback }) => {
   // const userSite = [];
   // userSite.push(sites);
+
   return (
     <Table>
       <thead>
@@ -40,12 +42,9 @@ const FeedbackTable = ({ allFeedback }) => {
                 defaultIsChecked={feedback.status === "active"}
               />
             </Td>
+
             <Td>
-              <IconButton
-                aria-label="Remove feedback"
-                icon={<DeleteIcon />}
-                variant="ghost"
-              />
+              <RemoveButton feedbackId={feedback.id} />
             </Td>
           </Box>
         ))}

@@ -6,6 +6,9 @@ import { Box } from "@chakra-ui/layout";
 import { Skeleton } from "@chakra-ui/skeleton";
 import { Table, Tr, Th, Td } from "./Table";
 import { Link } from "@chakra-ui/layout";
+import { Code, IconButton } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { Switch } from "@chakra-ui/switch";
 import { parseISO } from "date-fns";
 
 const FeedbackTable = ({ allFeedback }) => {
@@ -24,13 +27,26 @@ const FeedbackTable = ({ allFeedback }) => {
       </thead>
       <tbody>
         {allFeedback.map((feedback) => (
-          <Box as="tr" key={sifeedbackte.id}>
-            <Td fontWeight="medium">{feedback.name}</Td>
+          <Box as="tr" key={feedback.id}>
+            <Td fontWeight="medium">{feedback.author}</Td>
             <Td>{feedback.text}</Td>
             <Td>
               <Code>{"/"}</Code>
             </Td>
-            <Td>{"Remove"}</Td>
+            <Td>
+              <Switch
+                colorScheme="green"
+                size="md"
+                defaultIsChecked={feedback.status === "active"}
+              />
+            </Td>
+            <Td>
+              <IconButton
+                aria-label="Remove feedback"
+                icon={<DeleteIcon />}
+                variant="ghost"
+              />
+            </Td>
           </Box>
         ))}
       </tbody>
